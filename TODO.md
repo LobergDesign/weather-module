@@ -35,6 +35,10 @@
 - [ ] Add loading/error slots
 - [ ] Nuxt DevTools integration
 
+### GitHub Workflow Reintegration
+
+- [ ] Re-introduce `.github` folder with CI/CD workflows (lint, test, build)
+
 ---
 
 ## Notes
