@@ -2,6 +2,9 @@
   "name": "nuxt-weather-module",
   "version": "1.0.0",
   "description": "A Nuxt module for displaying dynamic weather icons from Open-Meteo API with configurable coordinates",
+  "author": "LobergDesign",
+  "homepage": "https://github.com/LobergDesign/weather-module#readme",
+  "bugs": "https://github.com/LobergDesign/weather-module/issues",
   "repository": "LobergDesign/weather-module",
   "license": "MIT",
   "keywords": [

@@ -38,6 +38,7 @@ coverage
 .claude
 playground
 GEMINI.md
+TODO.md
 
 # Intellij idea
 *.iml
