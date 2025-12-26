@@ -1,4 +1,4 @@
-# Weather Module
+# Nuxt Weather Module
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -24,7 +24,7 @@ A Nuxt module for displaying dynamic weather icons from the Open-Meteo API.
 Install the module to your Nuxt application with one command:
 
 ```bash
-npx nuxi module add weather-module
+npx nuxi module add nuxt-weather-module
 ```
 
 That's it! You can now use the `DynamicWeather` component in your Nuxt app.
@@ -35,7 +35,7 @@ The module can be configured in your `nuxt.config.ts` file:
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['weather-module'],
+  modules: ['nuxt-weather-module'],
   weatherModule: {
     latitude: 55.676098, // Copenhagen
     longitude: 12.568337, // Copenhagen
@@ -81,10 +81,10 @@ The module exports the following types for use in your application:
 - `CurrentWeatherDetail`
 - `CurrentWeatherUnits`
 
-You can import them from `weather-module`:
+You can import them from `nuxt-weather-module`:
 
 ```ts
-import type { WeatherIcon } from 'weather-module'
+import type { WeatherIcon } from 'nuxt-weather-module'
 ```
 
 ## Notes
@@ -124,14 +124,14 @@ import type { WeatherIcon } from 'weather-module'
 </details>
 
 <!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/weather-module/latest.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-version-href]: https://npmjs.com/package/weather-module
+[npm-version-src]: https://img.shields.io/npm/v/nuxt-weather-module/latest.svg?style=flat&colorA=020420&colorB=00DC82
+[npm-version-href]: https://npmjs.com/package/nuxt-weather-module
 
-[npm-downloads-src]: https://img.shields.io/npm/dm/weather-module.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-downloads-href]: https://npm.chart.dev/weather-module
+[npm-downloads-src]: https://img.shields.io/npm/dm/nuxt-weather-module.svg?style=flat&colorA=020420&colorB=00DC82
+[npm-downloads-href]: https://npm.chart.dev/nuxt-weather-module
 
-[license-src]: https://img.shields.io/npm/l/weather-module.svg?style=flat&colorA=020420&colorB=00DC82
-[license-href]: https://npmjs.com/package/weather-module
+[license-src]: https://img.shields.io/npm/l/nuxt-weather-module.svg?style=flat&colorA=020420&colorB=00DC82
+[license-href]: https://npmjs.com/package/nuxt-weather-module
 
 [nuxt-src]: https://img.shields.io/badge/Nuxt-020420?logo=nuxt
 [nuxt-href]: https://nuxt.com
