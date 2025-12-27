@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Icon v-if="status === 'success'" class="dynamic-weather-icon" :name="`weather:${setIcon}`" />
+    <Icon
+      v-if="status === 'success'"
+      class="dynamic-weather-icon"
+      :name="`weather:${setIcon}`"
+    />
   </div>
 </template>
 <script lang="ts" setup>
@@ -11,26 +15,43 @@ import type { OpenMeteoResponse, WeatherIcon } from "../types/weather";
 import { WEATHER_CODE_MAP } from "../utils/constants";
 
 // Expose status via v-model for parent component control
-const status = defineModel<'idle' | 'pending' | 'success' | 'error'>('status', {
-  default: 'pending'
+const status = defineModel<"idle" | "pending" | "success" | "error">("status", {
+  default: "pending",
 });
+
+// Ensure status is never undefined
+watch(
+  status,
+  (newStatus) => {
+    if (newStatus === undefined) {
+      status.value = "pending";
+    }
+  },
+  { immediate: true }
+);
 
 // Get module configuration from runtime config
 const config = useRuntimeConfig();
 const { latitude, longitude } = config.public.weatherModule;
 
-const { status: asyncStatus, data, error } = await useLazyAsyncData<OpenMeteoResponse>(
-  "weather-icon",
-  () =>
-    $fetch<OpenMeteoResponse>(
-      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
-    )
+const {
+  status: asyncStatus,
+  data,
+  error,
+} = await useLazyAsyncData<OpenMeteoResponse>("weather-icon", () =>
+  $fetch<OpenMeteoResponse>(
+    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
+  )
 );
 
 // Sync asyncStatus from useLazyAsyncData to the status model
-watch(asyncStatus, (newStatus) => {
-  status.value = newStatus;
-}, { immediate: true });
+watch(
+  asyncStatus,
+  (newStatus) => {
+    status.value = newStatus;
+  },
+  { immediate: true }
+);
 
 if (error.value) {
   console.error("Error fetching weather data:", error.value);
