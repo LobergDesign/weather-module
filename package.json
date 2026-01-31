@@ -1,6 +1,6 @@
 {
   "name": "nuxt-weather-module",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A Nuxt module for displaying dynamic weather icons from Open-Meteo API with configurable coordinates",
   "author": "LobergDesign",
   "homepage": "https://github.com/LobergDesign/weather-module#readme",
@@ -48,12 +48,9 @@
   "dependencies": {
     "@nuxt/kit": "^4.2.2"
   },
-  "peerDependencies": {
-    "nuxt-icons": "^4.0.0"
-  },
+  "peerDependencies": {},
   "devDependencies": {
     "@nuxt/devtools": "^3.1.1",
-    "nuxt-icons": "^4.0.0",
     "@nuxt/eslint-config": "^1.12.1",
     "@nuxt/module-builder": "^1.0.2",
     "@nuxt/schema": "^4.2.2",
