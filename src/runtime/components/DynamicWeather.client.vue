@@ -1,61 +1,31 @@
 <template>
   <div>
-    <Icon
+    <nuxt-icon
       v-if="status === 'success'"
       class="dynamic-weather-icon"
-      :name="`weather:${setIcon}`"
+      :name="`weather/${setIcon}`"
+      filled
     />
   </div>
 </template>
 <script lang="ts" setup>
-import { computed, watch } from "vue";
-import { useRuntimeConfig, useLazyAsyncData } from "#app";
+import { computed, ref, onMounted } from "vue";
+import { useRuntimeConfig } from "#app";
 import { $fetch } from "ofetch";
 import type { OpenMeteoResponse, WeatherIcon } from "../types/weather";
 import { WEATHER_CODE_MAP } from "../utils/constants";
 
 // Expose status via v-model for parent component control
 const status = defineModel<"idle" | "pending" | "success" | "error">("status", {
-  default: "pending",
+  default: "idle",
 });
-
-// Ensure status is never undefined
-watch(
-  status,
-  (newStatus) => {
-    if (newStatus === undefined) {
-      status.value = "pending";
-    }
-  },
-  { immediate: true }
-);
 
 // Get module configuration from runtime config
 const config = useRuntimeConfig();
 const { latitude, longitude } = config.public.weatherModule;
 
-const {
-  status: asyncStatus,
-  data,
-  error,
-} = await useLazyAsyncData<OpenMeteoResponse>("weather-icon", () =>
-  $fetch<OpenMeteoResponse>(
-    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
-  )
-);
-
-// Sync asyncStatus from useLazyAsyncData to the status model
-watch(
-  asyncStatus,
-  (newStatus) => {
-    status.value = newStatus;
-  },
-  { immediate: true }
-);
-
-if (error.value) {
-  console.error("Error fetching weather data:", error.value);
-}
+// Client-side data fetching
+const data = ref<OpenMeteoResponse | null>(null);
 
 const setIcon = computed<WeatherIcon>(() => {
   if (!data.value?.current_weather) return "partly-cloudy-day";
@@ -68,12 +38,23 @@ const setIcon = computed<WeatherIcon>(() => {
   return is_day === 1 ? iconSet.day : iconSet.night;
 });
 
-// Get icon size from config
-const iconSize = config.public.weatherModule.iconSize;
+// Fetch weather data on client mount
+onMounted(async () => {
+  status.value = "pending";
+  try {
+    data.value = await $fetch<OpenMeteoResponse>(
+      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`,
+    );
+    status.value = "success";
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+    status.value = "error";
+  }
+});
 </script>
 <style scoped>
-.dynamic-weather-icon {
-  height: v-bind(iconSize);
-  width: v-bind(iconSize);
+.dynamic-weather-icon :deep(svg) {
+  height: clamp(25px, 6vw, 50px);
+  width: clamp(25px, 6vw, 50px);
 }
 </style>

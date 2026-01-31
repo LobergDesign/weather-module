@@ -3,7 +3,10 @@ import {
   addComponent,
   createResolver,
   updateRuntimeConfig,
+  installModule,
 } from "@nuxt/kit";
+import { existsSync, mkdirSync, readdirSync, copyFileSync } from "node:fs";
+import { join } from "node:path";
 
 export interface ModuleOptions {
   /**
@@ -17,12 +20,6 @@ export interface ModuleOptions {
    * @default 12.568337 (Copenhagen)
    */
   longitude?: number;
-
-  /**
-   * Icon size (CSS value)
-   * @default 'clamp(15px, 5vw, 30px)'
-   */
-  iconSize?: string;
 
   /**
    * Whether to register the DynamicWeather component globally
@@ -50,38 +47,43 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     latitude: 55.676098, // Copenhagen
     longitude: 12.568337, // Copenhagen
-    iconSize: "clamp(30px, 5vw, 50px)",
     global: true,
     prefix: "",
   },
 
-  moduleDependencies(nuxt) {
+  async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
 
-    return {
-      "@nuxt/icon": {
-        defaults: {
-          customCollections: [
-            {
-              prefix: "weather",
-              dir: resolver.resolve("./runtime/icons"),
-            },
-          ],
-        },
-      },
-    };
-  },
+    // Install nuxt-icons module
+    await installModule("nuxt-icons");
 
-  setup(options, nuxt) {
-    const resolver = createResolver(import.meta.url);
+    // Copy weather icons to project's assets/icons/weather folder
+    const sourceIconsDir = resolver.resolve("./runtime/icons");
+    const targetIconsDir = join(nuxt.options.srcDir, "assets/icons/weather");
 
-    // 1. Inject runtime config for component access
+    // Ensure target directory exists
+    if (!existsSync(targetIconsDir)) {
+      mkdirSync(targetIconsDir, { recursive: true });
+    }
+
+    // Copy all SVG files
+    const iconFiles = readdirSync(sourceIconsDir).filter((f) =>
+      f.endsWith(".svg")
+    );
+    for (const file of iconFiles) {
+      const sourcePath = join(sourceIconsDir, file);
+      const targetPath = join(targetIconsDir, file);
+      if (!existsSync(targetPath)) {
+        copyFileSync(sourcePath, targetPath);
+      }
+    }
+
+    // Inject runtime config for component access
     updateRuntimeConfig({
       public: {
         weatherModule: {
           latitude: options.latitude,
           longitude: options.longitude,
-          iconSize: options.iconSize,
         },
       },
     });
@@ -94,7 +96,7 @@ export default defineNuxtModule<ModuleOptions>({
     addComponent({
       name: componentName,
       filePath: resolver.resolve(
-        "./runtime/components/DynamicWeather.client.vue"
+        "./runtime/components/DynamicWeather.client.vue",
       ),
       global: options.global,
       mode: "client",

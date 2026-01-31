@@ -35,20 +35,18 @@ The module can be configured in your `nuxt.config.ts` file:
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['nuxt-weather-module'],
+  modules: ["nuxt-weather-module"],
   weatherModule: {
     latitude: 55.676098, // Copenhagen
-    longitude: 12.568337, // Copenhagen
-    iconSize: 'clamp(30px, 5vw, 50px)',
+    longitude: 12.568337, // Copenhagen´
   },
-})
+});
 ```
 
-| Option      | Type     | Default                         | Description                        |
-|-------------|----------|---------------------------------|------------------------------------|
-| `latitude`  | `number` | `55.676098` (Copenhagen)        | Latitude for the weather location. |
-| `longitude` | `number` | `12.568337` (Copenhagen)        | Longitude for the weather location.|
-| `iconSize`  | `string` | `'clamp(30px, 5vw, 50px)'`      | CSS value for the icon size.       |
+| Option      | Type     | Default                  | Description                         |
+| ----------- | -------- | ------------------------ | ----------------------------------- |
+| `latitude`  | `number` | `55.676098` (Copenhagen) | Latitude for the weather location.  |
+| `longitude` | `number` | `12.568337` (Copenhagen) | Longitude for the weather location. |
 
 ## Usage
 
@@ -84,7 +82,7 @@ The module exports the following types for use in your application:
 You can import them from `nuxt-weather-module`:
 
 ```ts
-import type { WeatherIcon } from 'nuxt-weather-module'
+import type { WeatherIcon } from "nuxt-weather-module";
 ```
 
 ## Notes
@@ -97,41 +95,39 @@ import type { WeatherIcon } from 'nuxt-weather-module'
 <details>
   <summary>Local development</summary>
 
-  ```bash
-  # Install dependencies
-  npm install
+```bash
+# Install dependencies
+npm install
 
-  # Generate type stubs
-  npm run dev:prepare
+# Generate type stubs
+npm run dev:prepare
 
-  # Develop with the playground
-  npm run dev
+# Develop with the playground
+npm run dev
 
-  # Build the playground
-  npm run dev:build
+# Build the playground
+npm run dev:build
 
-  # Run ESLint
-  npm run lint
+# Run ESLint
+npm run lint
 
-  # Run Vitest
-  npm run test
-  npm run test:watch
+# Run Vitest
+npm run test
+npm run test:watch
 
-  # Release new version
-  npm run release
-  ```
+# Release new version
+npm run release
+```
 
 </details>
 
 <!-- Badges -->
+
 [npm-version-src]: https://img.shields.io/npm/v/nuxt-weather-module/latest.svg?style=flat&colorA=020420&colorB=00DC82
 [npm-version-href]: https://npmjs.com/package/nuxt-weather-module
-
 [npm-downloads-src]: https://img.shields.io/npm/dm/nuxt-weather-module.svg?style=flat&colorA=020420&colorB=00DC82
 [npm-downloads-href]: https://npm.chart.dev/nuxt-weather-module
-
 [license-src]: https://img.shields.io/npm/l/nuxt-weather-module.svg?style=flat&colorA=020420&colorB=00DC82
 [license-href]: https://npmjs.com/package/nuxt-weather-module
-
 [nuxt-src]: https://img.shields.io/badge/Nuxt-020420?logo=nuxt
 [nuxt-href]: https://nuxt.com
