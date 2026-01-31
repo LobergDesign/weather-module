@@ -1,6 +1,6 @@
 # Weather Module Implementation TODO
 
-## ✅ Completed Phases
+## ✅ Completed Phases for going live
 
 - ✅ **Phase 1:** Module Infrastructure Setup
 - ✅ **Phase 2:** Runtime Code Migration (component, types, utils, 26 icons)
@@ -12,17 +12,27 @@
 
 ---
 
+## overall
+
+- Remove width/height?
+
 ## Future Enhancements (v2.0)
 
-- [ ] Add `useWeather()` composable
-- [ ] Add server-side caching
-- [ ] Support multiple locations
-- [ ] Add loading/error slots
-- [ ] Nuxt DevTools integration
+- Add `useWeather()` composable
+- Add server-side caching
+- Support multiple locations
+
+### Quality assuarance
+
+- Make sure to comunicate the usage of weather icons creator
+- Look into vue/nuxt setup - why no auto import if nuxt is installed?
+- Create more tests
+- Better README.md - look at other nuxt module sites
+- Fix types (undefined watch hack is not good)
 
 ### GitHub Workflow Reintegration
 
-- [ ] Re-introduce `.github` folder with CI/CD workflows (lint, test, build)
+- Re-introduce `.github` folder with CI/CD workflows (lint, test, build)
 
 ---
 
